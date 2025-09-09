@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: source
+    database: db_dbt_svey_dev # /!\ env hard coded
+    schema: source
+
+    tables:
+      - name: orders
+        description: This table contains raw order data
+        columns:
+          - name: amount
+            description: The amount of the order
+          - name: created_at
+            description: The timestamp when the order was created
+          - name: dishes_ids
+            description: The IDs of the dishes included in the order
+          - name: identifier
+            description: The unique identifier for the order
+            data_tests:
+            - not_null
+            - unique:
+                config:
+                  severity: warn
+          - name: payment_method
+            description: The payment method used for the order
+          - name: restaurant_identifier
+            description: The unique identifier for the restaurant associated with the order
+      - name: restaurants
+        description: This table contains raw restaurant data

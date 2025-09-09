@@ -1,0 +1,21 @@
+version: 2
+
+models:
+- name: restaurants__turnover_ordered
+  description: This table contains restaurant turnover data ordered by amount
+
+  columns:
+  - name: rank
+    description: The rank of the restaurant based on turnover
+  - name: amount
+    description: The total turnover amount for the restaurant
+    data_tests:
+    - is_positive
+  - name: restaurant_identifier
+    description: The unique identifier for the restaurant
+  - name: name
+    description: The name of the restaurant
+    data_tests:
+    - unique
+  - name: address
+    description: The address of the restaurant
