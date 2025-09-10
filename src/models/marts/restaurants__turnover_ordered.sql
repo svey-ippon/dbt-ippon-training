@@ -1,5 +1,9 @@
 select
-    rank() over (order by amount desc) as rank,
-    *
-from {{  ref('stg_restaurants__turnover')  }}
-order by amount desc
+    row_number() over (order by turnover desc)  as rank
+    , name::string                              as name
+    , address::string                           as address
+    , turnover::number                          as turnover
+from 
+    {{ ref('stg_restaurants__turnover_ordered') }}
+limit
+    {{ var('nb_restaurants_to_show') }}

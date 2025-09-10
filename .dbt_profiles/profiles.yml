@@ -29,5 +29,5 @@ dbt_ippon_training:
       schema: "{{env_var('DBT_SCHEMA_NAME_PROD')}}"
       threads: 4
       user: "{{env_var('DBT_USERNAME_PROD')}}"
-      password: "{{env_var('DBT_ENV_SECRET_PASSWORD')}}"
+      password: "{{env_var('DBT_ENV_SECRET_PASSWORD_PROD')}}"
       warehouse: "{{env_var('DBT_WH_NAME_PROD')}}"

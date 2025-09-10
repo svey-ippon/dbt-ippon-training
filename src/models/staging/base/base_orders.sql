@@ -1,8 +1,8 @@
 select distinct
-    identifier,
-    created_at,
-    amount,
-    dishes_ids,
-    payment_method,
-    restaurant_identifier
-from {{ source('source', 'orders') }}
+    identifier
+    , restaurant_identifier
+    , dishes_ids
+    , payment_method
+    , amount
+    , created_at
+from {{ mockable_source('source', 'orders','sample_orders') }}

@@ -1,0 +1,36 @@
+unit_tests:
+- name: test_agg_is_fine
+  description: "Demo unit test."
+  model: restaurants__benefit_orders_hourly
+  given:
+  - input: ref('stg_orders__dishes_flattened')
+    format: sql
+    rows: |
+      select * from values
+      (1, '2022-08-27 11:00:00.000'),
+      (1, '2022-08-27 11:00:00.000'),
+      (1, '2022-08-27 12:00:00.000'),
+      (1, '2022-08-27 12:00:00.000'),
+      (1, '2022-08-27 12:00:00.000'),
+      (2, '2022-08-27 11:00:00.000'),
+      (2, '2022-08-27 11:00:00.000')
+      as t(dish_id, created_at)
+    # Alternatively, you can use YAML syntax for a NON EPHEMERAL INPUT model
+    # rows:
+    # - { dish_id: 1, created_at: 2022-08-27 11:00:00.000 }
+    # - { dish_id: 1, created_at: 2022-08-27 11:00:00.000 }
+    # ...
+
+  - input: ref('base_dishes')
+    format: sql
+    rows: |
+      select * from values
+      (1, 'dish_1', 10, 5),
+      (2, 'dish_2', 20, 10)
+      as t(identifier, name, selling_price, production_cost)
+
+  expect:
+    rows:
+    - { identifier: 1, nb_ordered: 2, global_turnover: 20, global_profit: 10, hour: 2022-08-27 11:00:00.000 }
+    - { identifier: 1, nb_ordered: 3, global_turnover: 30, global_profit: 15, hour: 2022-08-27 12:00:00.000 }
+    - { identifier: 2, nb_ordered: 2, global_turnover: 40, global_profit: 20, hour: 2022-08-27 11:00:00.000 }

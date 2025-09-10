@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: restaurants__amount_by_payment_type
+    description: Table showing amount for each payment method
+    columns:
+      - name: name
+        description: Name of the restaurant
+  - name: restaurants__turnover_ordered
+    description: Table showing the ranking of restaurants by turnover
+    columns:
+      - name: rank
+        description: Rank in term of turnover of the restaurants
+      - name: name
+        description: Name of the restaurants
+        tests:
+          - unique
+          - not_null
+      - name: address
+        description: Address of the restaurants
+      - name: turnover
+        description: Turnover made by the restaurants
+
+  - name: restaurants__benefit_orders_hourly
+    description: Table showing hourly benefit and number of orders by restaurant
+    columns:
+      - name: identifier
+        description: Identifier of the restaurant
+        tests:
+          - not_null
+      - name: nb_ordered
+        description: Number of dishes ordered during the hour
+      - name: global_turnover
+        description: Turnover made during the hour
+      - name: global_profit
+        description: Profit made during the hour
+      - name: hour
+        description: Hour of the orders
+    tests:
+      - dbt_utils.equality:
+          compare_model: ref('expect_restaurants__benefit_orders_hourly')
+          # A TAGGER COMME TEST D'INTEGRATION

@@ -33,10 +33,15 @@ models:
     # Config indicated by + and applies to all files under models/
     marts:
       +materialized: table
-      +schema: silver
+      +schema: marts
     staging:
       +materialized: ephemeral
+      +schema: stg
 
 seeds:
   dbt_ippon_training:
     +schema: seeds
+
+
+vars:
+  nb_restaurants_to_show: 4
